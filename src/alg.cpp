@@ -1,5 +1,4 @@
 // Copyright 2021 NNTU-CS
-// Copyright 2025 NNTU-CS
 #ifndef INCLUDE_TPQUEUE_H_
 #define INCLUDE_TPQUEUE_H_
 
