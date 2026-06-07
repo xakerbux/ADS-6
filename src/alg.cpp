@@ -1,69 +1,17 @@
-// Copyright 2021 NNTU-CS
-#ifndef INCLUDE_TPQUEUE_H_
-#define INCLUDE_TPQUEUE_H_
+#include "tpqueue.h"
 
-struct SYM {
-    char ch;
-    int prior;
-};
-
-template<typename T>
-class TPQueue {
- private:
-    struct Node {
-        T data;
-        Node* next;
-        Node(const T& value) : data(value), next(nullptr) {}
-    };
-
-    Node* head;
-
- public:
-    TPQueue() : head(nullptr) {}
-
-    ~TPQueue() {
-        while (!isEmpty()) {
-            pop();
-        }
-    }
-
-    void push(const T& item) {
-        Node* newNode = new Node(item);
-        if (isEmpty() || item.prior > head->data.prior) {
-            newNode->next = head;
-            head = newNode;
-            return;
-        }
-        Node* current = head;
-        while (current->next != nullptr &&
-               current->next->data.prior >= item.prior) {
-            current = current->next;
-        }
-        newNode->next = current->next;
-        current->next = newNode;
-    }
-
-    T pop() {
-        if (isEmpty()) {
-            return T();
-        }
-        Node* temp = head;
-        T result = head->data;
-        head = head->next;
-        delete temp;
-        return result;
-    }
-
-    bool isEmpty() const {
-        return head == nullptr;
-    }
-
-    T get() const {
-        if (isEmpty()) {
-            return T();
-        }
-        return head->data;
-    }
-};
-
-#endif  // INCLUDE_TPQUEUE_H_
+int main() {
+    TPQueue<SYM> pqueue;
+    pqueue.push(SYM{'a', 4});
+    pqueue.push(SYM{'b', 7});
+    pqueue.push(SYM{'c', 5});
+    pqueue.push(SYM{'d', 2});
+    
+    // Извлечение: b (prior 7), c (prior 5), a (prior 4), d (prior 2)
+    SYM c1 = pqueue.pop();  // b
+    SYM c2 = pqueue.pop();  // c
+    SYM c3 = pqueue.pop();  // a
+    SYM c4 = pqueue.pop();  // d
+    
+    return 0;
+}
